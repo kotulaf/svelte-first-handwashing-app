@@ -1,9 +1,12 @@
 <script>
+    import { createEventDispatcher } from "svelte";
     import ProgressBar from "./ProgressBar.svelte";
     const totalSeconds = 20;
     const addPercentage = 100 / totalSeconds;
     let secondsLeft = totalSeconds;
     let percentage = 0;
+
+    const dispatch = createEventDispatcher();
 
     let isRunning = false;
     function startTimer() {
@@ -18,6 +21,7 @@
                 isRunning = false;
                 percentage = 0;
                 secondsLeft = totalSeconds;
+                dispatch("end");
             }  
         }, 1000);
     }
@@ -34,6 +38,10 @@
 
    .start-btn {
     width: 100%;
+   }
+
+   .start-btn[disabled] {
+    cursor: not-allowed;
    }
 </style>
 
