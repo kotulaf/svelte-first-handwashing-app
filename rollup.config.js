@@ -4,6 +4,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only'; // we have to write this
+import copy from 'rollup-plugin-copy';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -68,7 +69,21 @@ export default {
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
-		production && terser()
+		production && terser(),
+
+		// Copy bootstrap to our public folder in order to make it work
+		copy({
+			targets: [
+				{
+					src: "node_modules/bootstrap/dist/css/bootstrap.min.css",
+					dest: "public/vendor/bootstrap/css",
+				},
+				{
+					src: "node_modules/bootstrap/dist/js/bootstrap.min.js",
+					dest: "public/vendor/bootstrap/js",
+				}
+			]
+		})
 	],
 	watch: {
 		clearScreen: false
