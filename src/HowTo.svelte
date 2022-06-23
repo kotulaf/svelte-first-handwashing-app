@@ -1,6 +1,6 @@
 <style>
     img {
-        width: 50%;
+        width: 35%;
         height: auto;
         display: block;
         margin: 0 auto;

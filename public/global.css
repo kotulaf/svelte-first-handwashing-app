@@ -22,7 +22,3 @@ button {
 	flex: 1;
 	cursor: pointer;
 }
-
-.sr-only {
-	display: none;
-}
