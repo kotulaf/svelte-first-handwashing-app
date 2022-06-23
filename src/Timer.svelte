@@ -1,6 +1,26 @@
 <script>
     import ProgressBar from "./ProgressBar.svelte";
-    let percentage = 100;
+    const totalSeconds = 20;
+    const addPercentage = 100 / totalSeconds;
+    let secondsLeft = totalSeconds;
+    let percentage = 0;
+
+    let isRunning = false;
+    function startTimer() {
+        const interval = setInterval(() => {
+            isRunning = true;
+            secondsLeft -= 1; 
+            percentage += addPercentage; 
+            if(secondsLeft == 0)
+            {
+                clearInterval(interval);
+                /* location.reload(); */
+                isRunning = false;
+                percentage = 0;
+                secondsLeft = totalSeconds;
+            }  
+        }, 1000);
+    }
 </script>
 
 <style>
@@ -9,7 +29,7 @@
    } 
 
    .start {
-    margin: 1% 0;
+    margin: 5% 0;
    }
 
    .start-btn {
@@ -23,12 +43,12 @@
       </div>
       <div class="col">
         <div class="text-basic">
-            <h2>Seconds Left: </h2>
+            <h2>Seconds Left: {secondsLeft}</h2>
         </div>
         
         <ProgressBar {percentage}/>
             <div class="start">
-                <button class="btn btn-outline-primary start-btn">Start</button>
+                <button disabled={isRunning} on:dblclick={startTimer} class="btn btn-outline-primary start-btn" id="start-button">Start</button>
             </div>
       </div>
       <div class="col">
